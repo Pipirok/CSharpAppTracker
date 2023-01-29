@@ -1,0 +1,30 @@
+﻿@using ProjectBack.Models.EntityFramework
+@model List<UsersAndApplication>
+@{
+    ViewBag.Title = "UserApps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Applications of user @Model[0].UserIP</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>App ID</th>
+            <th>App Name</th>
+            <th>Is allowed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UsersAndApplication _ in @Model)
+        {
+            <tr>
+                <td>@_.AppID</td>
+                <td>@_.Name</td>
+                <td>@Convert.ToBoolean(_.Allowed).ToString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

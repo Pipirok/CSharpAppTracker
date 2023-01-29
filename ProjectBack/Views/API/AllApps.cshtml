@@ -1,0 +1,27 @@
+﻿@using ProjectBack.Models.EntityFramework;
+@model List<Application>
+@{
+    ViewBag.Title = "AllApps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>App Name</th>
+            <th>Is allowed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Application app in @Model)
+            {
+                <tr>
+                    <td>@app.ID</td>
+                    <td>@app.Name</td>
+                    <td>@Convert.ToBoolean(app.Allowed).ToString()</td>
+                </tr>
+            }
+    </tbody>
+</table>
+

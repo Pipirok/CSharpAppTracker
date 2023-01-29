@@ -1,0 +1,24 @@
+﻿@using ProjectBack.Models.EntityFramework
+@model List<string>
+@{
+    ViewBag.Title = "AllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>User IP</th>
+            <th>View apps</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (string userIP in @Model)
+        {
+            <tr>
+                <td>@userIP</td>
+                <td><a href="/API/UserApps/?UserIP=@userIP">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
