@@ -13,9 +13,45 @@ main {
     display: flex;
     flex-direction: column;
     height: 100%;
+    justify-content: center;
 }
 
 .main-cont {
     flex-grow: 1;
     padding: 5rem;
+    overflow: auto;
 }
+
+.center-x {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.mGrid {
+    width: 100%;
+    background-color: #fff;
+    margin: 5px 0 10px 0;
+    border: solid 1px #525252;
+    border-collapse: collapse;
+}
+
+    .mGrid td {
+        padding: 2px;
+        border: solid 1px #c1c1c1;
+        color: #000;
+        font-size: 1.1em;
+    }
+
+    .mGrid th {
+        padding: 4px 2px;
+        color: #fff;
+        background: #740404 repeat-x top;
+        border-left: solid 1px #525252;
+        font-size: 1.3em;
+    }
+
+    .mGrid tbody tr:nth-child(2n) {
+        background: #06f8b6 repeat-x top;
+    }

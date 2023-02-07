@@ -15,16 +15,22 @@ namespace ProjectBack.Controllers
         ProjectDBEntities db = new ProjectDBEntities();
         public ActionResult Index()
         {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
             return View();
         }
 
         public ActionResult AllUsers()
         {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
             return View(db.UserApplications.Select(_ => _.UserIP).ToList().Distinct().ToList());
         }
 
         public ActionResult UserApps()
         {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
             string UserIP = Request.Params["UserIP"].ToString();
             List<UsersAndApplication> data = db.UsersAndApplications.Where(_ => _.UserIP == UserIP).ToList();
             return View(data);
@@ -32,12 +38,28 @@ namespace ProjectBack.Controllers
 
         public ActionResult AllApps()
         {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
             return View(db.Applications.ToList());
+        }
+
+        [Route("/API/ToggleAllowed/{ID}")]
+        public ActionResult ToggleAllowed(int ID)
+        {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
+            Application app = db.Applications.Find(ID);
+            app.Allowed = app.Allowed == 1 ? 0 : 1;
+            db.SaveChanges();
+
+            return Redirect("/API/AllApps");
         }
 
         [HttpPost]
         public ActionResult SubmitApps()
         {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
             try
             {
                 List<string> apps = JsonConvert.DeserializeObject<List<string>>(Request.Params["apps"]);
@@ -69,6 +91,18 @@ namespace ProjectBack.Controllers
             {
                 return Json(new { message = e.Message, error = true });
             }
+        }
+
+        [HttpPost]
+        public ActionResult Login(string login, string password)
+        {
+            AdminUser admin = db.AdminUsers.Where(d => d.Login == login).First();
+            if(admin == null) return Redirect("/Home/Index");
+            if (!(admin.Password == password)) return Redirect("/Home/Index");
+
+            Session["username"] = admin.Login;
+
+            return Redirect("/API/Index");
         }
     }
 }

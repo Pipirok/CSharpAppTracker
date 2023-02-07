@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in | Trackr</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+</head>
+<body>
+    <div class="container my-auto">
+        <main>
+            <form action="/API/Login" method="post" style="max-width: 600px;">
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login</label>
+                    <input required type="text" class="form-control" id="login" name="login" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input required type="password" class="form-control" id="password" name="password" />
+                </div>
+                <button class="btn btn-primary">Sign in</button>
+            </form>
+        </main>
+    </div>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

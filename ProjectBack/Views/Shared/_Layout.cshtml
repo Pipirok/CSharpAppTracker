@@ -4,15 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <main>
         @Html.Partial("_Header")
         <div class="main-cont">
-            @RenderBody()
+            <div class="center-x">
+                @RenderBody()
+            </div>
         </div>
         @Html.Partial("_Footer")
     </main>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

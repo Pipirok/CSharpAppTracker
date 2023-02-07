@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="ProjectDBModel.UserApplication" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="ProjectDBModel.AppID_FK" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ProjectDBModel.UsersAndApplication" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ProjectDBModel.AdminUser" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="ProjectDBModel.UsersApplicationsView" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

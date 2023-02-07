@@ -4,12 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<ul>
-    <li>
-        <a href="/API/AllApps">All apps</a>
-    </li>
-    <li>
-        <a href="/API/AllUsers">All users</a>
-    </li>
-</ul>
+<div class="container">
+    <div class="d-flex flex-row flex-wrap justify-content-around">
+        <a href="/API/AllApps"><h2 class="h2">Manage applications</h2></a>
+        <a href="/API/AllUsers"><h2 class="h2">View all users</h2></a>
+    </div>
+</div>
 

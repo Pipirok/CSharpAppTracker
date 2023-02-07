@@ -28,5 +28,7 @@ namespace ProjectBack.Models.EntityFramework
         public virtual DbSet<Application> Applications { get; set; }
         public virtual DbSet<UserApplication> UserApplications { get; set; }
         public virtual DbSet<UsersAndApplication> UsersAndApplications { get; set; }
+        public virtual DbSet<AdminUser> AdminUsers { get; set; }
+        public virtual DbSet<UsersApplicationsView> UsersApplicationsViews { get; set; }
     }
 }

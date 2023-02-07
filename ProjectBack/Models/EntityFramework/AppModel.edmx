@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="Applications">
           <Key>
             <PropertyRef Name="ID" />
@@ -36,6 +44,22 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
           <Property Name="Allowed" Type="int" />
           <Property Name="UserIP" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectDB.dbo.UsersApplicationsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UsersApplicationsView">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="AppID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="UserIP" />
+          </Key>
+          <Property Name="RN" Type="bigint" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="AppID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Allowed" Type="int" />
+          <Property Name="UserIP" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <Association Name="AppID_FK">
           <End Role="Applications" Type="Self.Applications" Multiplicity="1" />
           <End Role="UserApplications" Type="Self.UserApplications" Multiplicity="*" />
@@ -49,6 +73,7 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProjectDBModelStoreContainer">
+          <EntitySet Name="AdminUsers" EntityType="Self.AdminUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserApplications" EntityType="Self.UserApplications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsersAndApplications" EntityType="Self.UsersAndApplications" store:Type="Views" store:Schema="dbo">
@@ -59,6 +84,16 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
     [UsersAndApplications].[Allowed] AS [Allowed], 
     [UsersAndApplications].[UserIP] AS [UserIP]
     FROM [dbo].[UsersAndApplications] AS [UsersAndApplications]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UsersApplicationsView" EntityType="Self.UsersApplicationsView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UsersApplicationsView].[RN] AS [RN], 
+    [UsersApplicationsView].[UserID] AS [UserID], 
+    [UsersApplicationsView].[AppID] AS [AppID], 
+    [UsersApplicationsView].[Name] AS [Name], 
+    [UsersApplicationsView].[Allowed] AS [Allowed], 
+    [UsersApplicationsView].[UserIP] AS [UserIP]
+    FROM [dbo].[UsersApplicationsView] AS [UsersApplicationsView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="AppID_FK" Association="Self.AppID_FK">
             <End Role="Applications" EntitySet="Applications" />
@@ -107,6 +142,8 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
             <End Role="UserApplications" EntitySet="UserApplications" />
           </AssociationSet>
           <EntitySet Name="UsersAndApplications" EntityType="ProjectDBModel.UsersAndApplication" />
+          <EntitySet Name="AdminUsers" EntityType="ProjectDBModel.AdminUser" />
+          <EntitySet Name="UsersApplicationsViews" EntityType="ProjectDBModel.UsersApplicationsView" />
         </EntityContainer>
         <EntityType Name="UsersAndApplication">
           <Key>
@@ -115,6 +152,28 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
             <PropertyRef Name="Name" />
             <PropertyRef Name="UserIP" />
           </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="AppID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Allowed" Type="Int32" />
+          <Property Name="UserIP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UsersApplicationsView">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="AppID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="UserIP" />
+          </Key>
+          <Property Name="RN" Type="Int64" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="AppID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -153,6 +212,27 @@ warning 6002: The table/view 'ProjectDB.dbo.UsersAndApplications' does not have 
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminUsers">
+            <EntityTypeMapping TypeName="ProjectDBModel.AdminUser">
+              <MappingFragment StoreEntitySet="AdminUsers">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersApplicationsViews">
+            <EntityTypeMapping TypeName="ProjectDBModel.UsersApplicationsView">
+              <MappingFragment StoreEntitySet="UsersApplicationsView">
+                <ScalarProperty Name="UserIP" ColumnName="UserIP" />
+                <ScalarProperty Name="Allowed" ColumnName="Allowed" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RN" ColumnName="RN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
