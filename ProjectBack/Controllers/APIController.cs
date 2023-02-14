@@ -36,6 +36,21 @@ namespace ProjectBack.Controllers
             return View(data);
         }
 
+        public ActionResult AppUsers()
+        {
+            if (Session["username"] == null) return Redirect("/Home/Index");
+
+            int AppID = int.Parse(Request.Params["AppID"]);
+            string AppName = db.Applications.Find(AppID).Name;
+
+            List<UsersAndApplication> data = db.UsersAndApplications.Where(_ => _.AppID == AppID).ToList();
+
+            AppUsersModel model = new AppUsersModel();
+            model.AppName = AppName;
+            model.usersAndApplications = data;
+            return View(model);
+        }
+
         public ActionResult AllApps()
         {
             if (Session["username"] == null) return Redirect("/Home/Index");
@@ -58,7 +73,7 @@ namespace ProjectBack.Controllers
         [HttpPost]
         public ActionResult SubmitApps()
         {
-            if (Session["username"] == null) return Redirect("/Home/Index");
+            //if (Session["username"] == null) return Redirect("/Home/Index");
 
             try
             {

@@ -11,6 +11,7 @@
             <th>ID</th>
             <th>App Name</th>
             <th>Is allowed</th>
+            <th>View all users</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
                     <td>@app.ID</td>
                     <td>@app.Name</td>
                     <td><a class="btn @(Convert.ToBoolean(app.Allowed) ? "btn-success" : "btn-danger")" href="/API/ToggleAllowed/@app.ID">@Convert.ToBoolean(app.Allowed).ToString()</a></td>
+                    <td><a class="btn btn-info" href="/API/AppUsers?AppID=@app.ID">View</a></td>
                 </tr>
             }
     </tbody>

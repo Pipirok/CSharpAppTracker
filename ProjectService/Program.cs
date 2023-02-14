@@ -33,8 +33,7 @@ namespace ProjectService
             HttpClient client = new HttpClient();
             var postData = new Dictionary<string, string>
             { {"apps", JsonConvert.SerializeObject(installedApps)} };
-            var x = await client.PostAsync("https://localhost:44340/API/SubmitApps", new FormUrlEncodedContent(postData));
-            Console.WriteLine(x.ToString());
+            var x = await client.PostAsync("https://masternode:44340/API/SubmitApps", new FormUrlEncodedContent(postData));
         }
 
         static void Main(string[] args)

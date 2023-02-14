@@ -1,0 +1,28 @@
+﻿@using ProjectBack.Models.EntityFramework
+@model AppUsersModel
+
+@{
+    ViewBag.Title = "AppUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex flex-column">
+    <h2>Users with application @Model.AppName</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User IP</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (UsersAndApplication _ in @Model.usersAndApplications)
+            {
+                <tr>
+                    <td>@_.UserIP</td>
+                    <td><a class="btn btn-info" href="/API/UserApps?UserIP=@_.UserIP">View all apps</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
